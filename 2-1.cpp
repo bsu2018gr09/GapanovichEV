@@ -63,14 +63,14 @@ int findMax(int* arr, int m) {
 	}
 	return max;
 }
-void sort(int** arr, int n, int m) {
+void sort(int** arr, int n, int m) {//сделать нормальный алгоритм сортировки
 	for (int i = 0; i < n; ++i)
-		cout << "максимальный элемент в " << i << "-й строке: " << findMax(*(arr + i), m) << "\n";
+		cout << "максимальный элемент в " << i << "-й строке: " << findMax(*(arr + i), m) << "\n"; //зачем это тут? В этой ф-ции
 	cout << "\n";
 	for (int i = 0; i < n - 1; ++i)
 		for (int j = 0; j < n - i - 1; ++j)
-			if (findMax(*(arr + j), m) > findMax(*(arr + j + 1), m))
-				swap(*(arr + j), *(arr + j + 1));
+			if (findMax(*(arr + j), m) > findMax(*(arr + j + 1), m)) // совсем плохо. Очень часто вызываем findMax
+				swap(*(arr + j), *(arr + j + 1)); 
 	return;
 }
 
