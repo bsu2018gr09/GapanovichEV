@@ -1,4 +1,4 @@
-﻿// В массиве А(N,М) расположить строки в порядке возрастания их максимальных элементов.
+// В массиве А(N,М) расположить строки в порядке возрастания их максимальных элементов.
 
 #include <iostream>
 #include <clocale>
@@ -11,8 +11,8 @@ void give_memory(int**&arr, int n, int m);
 void free_arr(int** arr, int n, int);
 void init_arr(int** arr, int n, int m);
 void print_arr(int** arr, int n, int m);
-int findMax(int* arr, int n);
-void sort(int** arr, int n, int m);
+void findMax(int** arr, int *ArrOfMaxElements, int n, int m);
+void sort(int** arr, int *ArrOfMaxElements, int n, int m);
 
 
 void give_memory(int**&arr, int n, int m) {
@@ -42,9 +42,21 @@ void free_arr(int** arr, int n, int) {
 	return;
 }
 void init_arr(int** arr, int n, int m) {
+	int a, b;
+	cout << "Введите два положительных числа для заполнения массива случайными числами:\n";
+	cout << "1-е число: ";
+	cin >> a;
+	cout << "2-е число: ";
+	cin >> b;
+	if (a <= 0 || b <= 0) {
+		cout << "Нужно ввести положительные числа!\n";
+		system("pause");
+		exit(0);
+	}
+	else
 	for (int i = 0; i < n; ++i)
 		for (int j = 0; j < m; ++j)
-			arr[i][j] = rand() % 30 - rand() % 50;
+			arr[i][j] = rand() % a - rand() % b;
 	return;
 }
 void print_arr(int** arr, int n, int m) {
@@ -55,22 +67,31 @@ void print_arr(int** arr, int n, int m) {
 	}
 	return;
 }
-int findMax(int* arr, int m) {
-	int max = *arr;
-	for (int i = 0; i < m; ++i) {
-		if (arr[i] >= max)
-			max = arr[i];
+void findMax(int** arr, int *ArrOfMaxElements, int n, int m) {
+	int max;
+	for (int i = 0; i < n; ++i) {
+		max = arr[i][0];
+		for (int j = 0; j < m; ++j) {
+			if (arr[i][j] >= max)
+				max = arr[i][j];
+			ArrOfMaxElements[i] = max;
+		}
 	}
-	return max;
+	return;
 }
-void sort(int** arr, int n, int m) {//сделать нормальный алгоритм сортировки
-	for (int i = 0; i < n; ++i)
-		cout << "максимальный элемент в " << i << "-й строке: " << findMax(*(arr + i), m) << "\n"; //зачем это тут? В этой ф-ции
-	cout << "\n";
-	for (int i = 0; i < n - 1; ++i)
-		for (int j = 0; j < n - i - 1; ++j)
-			if (findMax(*(arr + j), m) > findMax(*(arr + j + 1), m)) // совсем плохо. Очень часто вызываем findMax
-				swap(*(arr + j), *(arr + j + 1)); 
+void sort(int** arr, int *ArrOfMaxElements, int n, int m) {
+	char flag{ 0 };
+	for (int i = 0; i < n - 1; ++i) {
+		flag = 0;
+		for (int j = 0; j < n - i - 1; ++j) {
+			if (*(ArrOfMaxElements + i) > *(ArrOfMaxElements + i + 1)) {
+				swap(*(arr + i), *(arr + i + 1));
+				flag = 1;
+			}
+		}
+		if (!flag)
+			break;
+	}
 	return;
 }
 
@@ -81,26 +102,36 @@ int main() {
 	cout << "Введите размер массива n на m:" << "\n";
 	cout << "Количество строк:";
 	cin >> n;
-	if (n<=0) {
+	if (n <= 0) {
 		cout << "Пожалуйста, выберите положительное число для количества строк!" << "\n";
 		system("pause");
 		exit(0);
 	}
 	cout << "Количество столбцов:";
 	cin >> m;
-	if (m<=0) {
+	if (m <= 0) {
 		cout << "Пожалуйста, выберите положительное число для количества столбцов!" << "\n";
+		system("pause");
+		exit(0);
+	}
+	int* ArrOfMaxElements = new (nothrow) int[n];
+	if (!ArrOfMaxElements) {
+		cout << "Error" << "\n";
 		system("pause");
 		exit(0);
 	}
 	int **arr = nullptr;
 	give_memory(arr, n, m);
 	init_arr(arr, n, m);
+	cout << "Исходный массив:" << "\n";
 	print_arr(arr, n, m);
-	sort(arr, n, m);
+	findMax(arr, ArrOfMaxElements, n, m);
+	sort(arr, ArrOfMaxElements, n, m);
 	cout << "Отсортированный массив, строки расположены в порядке возрастания их максимальных элементов" << "\n";
 	print_arr(arr, n, m);
 	free_arr(arr, n, m);
+	delete[]ArrOfMaxElements;
+	ArrOfMaxElements = nullptr;
 	system("pause");
 	return 0;
 }
