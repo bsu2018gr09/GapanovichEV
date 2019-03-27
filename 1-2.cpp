@@ -21,14 +21,14 @@ void freeMemory(int*& Arr) {
 	Arr = nullptr;
 	return;
 }
-void initArrRandom(int* Arr, int n){
+void initArrRandom(int* Arr, int n) {
 	int a, b;
 	cout << "Введите два положительных числа для заполнения массива случайными числами:\n";
-	cout << "1-е число: "; 
+	cout << "1-е число: ";
 	cin >> a;
 	cout << "2-е число: ";
 	cin >> b;
-	if (a <=0 || b <= 0) {
+	if (a <= 0 || b <= 0) {
 		cout << "Нужно ввести положительные числа!\n";
 		system("pause");
 		exit(0);
@@ -47,20 +47,26 @@ void printArr(int* Arr, int n) {
 }
 void sort(int* Arr, int n) {
 	int cnt1{ 0 };
+	char flag{ 0 };
 	for (int i = n - 1; i >= 0; --i) {
 		if (*(Arr + i) > 0) {
 			swap(*(Arr + i), *(Arr + n - 1 - cnt1));
 			++cnt1;
 		}
 	}
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < n; ++i) {
+		flag = 0;
 		for (int j = 0; j < n; ++j) {
 			if (*(Arr + j) < *(Arr + j + 1)) {
 				if (*(Arr + j + 1) <= 0) {
 					swap(*(Arr + j), *(Arr + j + 1));
+					flag=1;
 				}
 			}
 		}
+		if (!flag)
+			break;
+	}
 	return;
 }
 int main() {
