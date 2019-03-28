@@ -8,11 +8,13 @@
 using namespace std;
 
 void give_memory(int**&arr, int n, int m);
-void free_arr(int** arr, int n, int);
+void give_memoryArrMaxElements(int* &ArrOfMaxElements, int n);
+void free_arr(int** &arr, int n, int);
+void freeArrayMaxElements(int* &ArrOfMaxElements);
 void init_arr(int** arr, int n, int m);
 void print_arr(int** arr, int n, int m);
-void findMax(int** arr, int *ArrOfMaxElements, int n, int m);
-void sort(int** arr, int *ArrOfMaxElements, int n, int m);
+void findMax(int** arr, int* ArrOfMaxElements, int n, int m);
+void sort(int** arr, int* ArrOfMaxElements, int n, int m);
 
 
 void give_memory(int**&arr, int n, int m) {
@@ -32,13 +34,29 @@ void give_memory(int**&arr, int n, int m) {
 	}
 	return;
 }
-void free_arr(int** arr, int n, int) {
-	for (int i = 0; i < n; ++i) {
+
+void give_memoryArrMaxElements(int* &ArrOfMaxElements, int n) {
+	ArrOfMaxElements = new (nothrow) int[n];
+	if (!ArrOfMaxElements) {
+		cout << "Error" << "\n";
+		system("pause");
+		exit(0);
+	}
+	return;
+}
+
+void free_arr(int** &arr, int m, int) {
+	for (int i = 0; i < m; ++i) {
 		delete[] arr[i];
 		arr[i] = nullptr;
 	}
 	delete[] arr;
 	arr = nullptr;
+	return;
+}
+void freeArrayMaxElements(int* &ArrOfMaxElements) {
+	delete[]ArrOfMaxElements;
+	ArrOfMaxElements = nullptr;
 	return;
 }
 void init_arr(int** arr, int n, int m) {
@@ -54,9 +72,9 @@ void init_arr(int** arr, int n, int m) {
 		exit(0);
 	}
 	else
-	for (int i = 0; i < n; ++i)
-		for (int j = 0; j < m; ++j)
-			arr[i][j] = rand() % a - rand() % b;
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j < m; ++j)
+				arr[i][j] = rand() % a - rand() % b;
 	return;
 }
 void print_arr(int** arr, int n, int m) {
@@ -67,25 +85,25 @@ void print_arr(int** arr, int n, int m) {
 	}
 	return;
 }
-void findMax(int** arr, int *ArrOfMaxElements, int n, int m) {
+void findMax(int** arr, int* ArrOfMaxElements, int n, int m) {
 	int max;
 	for (int i = 0; i < n; ++i) {
 		max = arr[i][0];
-		for (int j = 0; j < m; ++j) {
-			if (arr[i][j] >= max)
+		for (int j = 0; j < m; ++j)
+			if (arr[i][j] > max)
 				max = arr[i][j];
-			ArrOfMaxElements[i] = max;
-		}
+		ArrOfMaxElements[i] = max;
 	}
 	return;
 }
-void sort(int** arr, int *ArrOfMaxElements, int n, int m) {
+void sort(int** arr, int* ArrOfMaxElements, int n, int m) {
 	char flag{ 0 };
 	for (int i = 0; i < n - 1; ++i) {
 		flag = 0;
 		for (int j = 0; j < n - i - 1; ++j) {
-			if (*(ArrOfMaxElements + i) > *(ArrOfMaxElements + i + 1)) {
-				swap(*(arr + i), *(arr + i + 1));
+			if (ArrOfMaxElements[j] > ArrOfMaxElements[j + 1]) {
+				swap(arr[j], arr[j + 1]);
+				swap(ArrOfMaxElements[j], ArrOfMaxElements[j + 1]);
 				flag = 1;
 			}
 		}
@@ -114,24 +132,28 @@ int main() {
 		system("pause");
 		exit(0);
 	}
-	int* ArrOfMaxElements = new (nothrow) int[n];
-	if (!ArrOfMaxElements) {
-		cout << "Error" << "\n";
-		system("pause");
-		exit(0);
-	}
+
+	int* ArrOfMaxElements = nullptr;
+	give_memoryArrMaxElements(ArrOfMaxElements,n);
+
 	int **arr = nullptr;
 	give_memory(arr, n, m);
+
 	init_arr(arr, n, m);
 	cout << "Исходный массив:" << "\n";
 	print_arr(arr, n, m);
+
 	findMax(arr, ArrOfMaxElements, n, m);
 	sort(arr, ArrOfMaxElements, n, m);
+
 	cout << "Отсортированный массив, строки расположены в порядке возрастания их максимальных элементов" << "\n";
 	print_arr(arr, n, m);
+
+	cout << "\n";
+
 	free_arr(arr, n, m);
-	delete[]ArrOfMaxElements;
-	ArrOfMaxElements = nullptr;
+	freeArrayMaxElements(ArrOfMaxElements);
+
 	system("pause");
 	return 0;
 }
