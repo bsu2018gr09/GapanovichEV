@@ -45,8 +45,8 @@ void give_memoryArrMaxElements(int* &ArrOfMaxElements, int n) {
 	return;
 }
 
-void free_arr(int** &arr, int m, int) {
-	for (int i = 0; i < m; ++i) {
+void free_arr(int** &arr, int n, int) {
+	for (int i = 0; i < n; ++i) {
 		delete[] arr[i];
 		arr[i] = nullptr;
 	}
