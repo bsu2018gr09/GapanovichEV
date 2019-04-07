@@ -31,7 +31,9 @@ int main() {
 	float step_r, step_g, step_b;
 	float  tmp_r1, tmp_g1, tmp_b1;
 	unsigned int w, h;
-
+/*	int step=100; // количество шагов
+	float r1=1, g1=100, b1=255; // первоначальные цвета (цвет 1)
+	float rr=100, gg=255, bb=9; // конечные цвета (цвет 2 к которому движемся) не работает при w=1024*/
 	cout << "Введите пожалуйста шаг:";
 	cin >> step;
 
@@ -48,8 +50,8 @@ int main() {
 	ggg.write((char *)&buf, 18);
 	fff.read((char *)&w, 4); cout << "w=" << w;
 	fff.read((char *)&h, 4); cout << ", h=" << h;
-	ggg.write((char *)&w, 4);
-	ggg.write((char *)&h, 4);
+	ggg.write((char *)&w, 4);//не понял????
+	ggg.write((char *)&h, 4);//не понял????
 	fff.read((char *)&buf, 28);
 	ggg.write((char *)&buf, 28);
 
