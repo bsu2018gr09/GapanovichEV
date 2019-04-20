@@ -1,5 +1,5 @@
 ﻿// Класс квадратные уравнения. Хранить коэффициенты и корни.
-
+//много где не хватает const!!!!!
 #include <iostream>
 #include <clocale>
 #include <cmath>
@@ -14,12 +14,12 @@ private:
 	double _x1; // корень квадратного уравнения ах^2+bx+c=0
 	double _x2; // корень квадратного уравнения ах^2+bx+c=0
 public:
-	QuadraticEquation() : _a{ 0 }, _b{ 0 }, _c{ 0 } { cout << "Constructor works\n"; };
+	QuadraticEquation() : _a{ 0 }, _b{ 0 }, _c{ 0 } { cout << "Constructor works\n"; };// прикольно. Я про такое КВАДРАТНОЕ ур.е и не слыхал!!!!
 	QuadraticEquation(double a, double b, double c) : _a{ a }, _b{ b }, _c{ c } {cout << "Constructor with coefficients a,b,c works\n"; };
-	QuadraticEquation(const QuadraticEquation &t) { cout << "Copy constructor\n"; };
+	QuadraticEquation(const QuadraticEquation &t) { cout << "Copy constructor\n"; };// и что он делает????
 	~QuadraticEquation() { cout << "Destructor works\n"; };
 
-	void set_a(double a) { _a = a; };
+	void set_a(double a) { _a = a; };// да??? Вот так просто????? А подумать!!!!!
 	void set_b(double b) { _b = b; };
 	void set_c(double c) { _c = c; };
 
@@ -39,10 +39,10 @@ public:
 	QuadraticEquation operator - (QuadraticEquation& q) {
 		return QuadraticEquation(get_a() - q.get_a(), get_b() - q.get_b(), get_c() - q.get_c());
 	} 
-	QuadraticEquation operator * (double& q) {
+	QuadraticEquation operator * (double& q) {//а зачем тут &
 		return QuadraticEquation (get_a() * q, get_b() * q, get_c() * q);
 	}
-	QuadraticEquation operator / (double& q) {
+	QuadraticEquation operator / (double& q) {//а зачем тут &
 		if (q != 0) {
 			return QuadraticEquation(get_a() / q, get_b() / q, get_c() / q);
 		}
@@ -50,7 +50,7 @@ public:
 			cout << "Impossible to divide\n";
 	}
 
-	void print(){
+	void print(){//зачем???? Есть же friend ostream& operator <<
 		cout << _a << "x^2";
 		if (_b >= 0)
 			cout << "+";
@@ -60,8 +60,8 @@ public:
 			cout << _c << "=0" << "\n";
 	}
 
-	int flag;
-
+	int flag; //это чо????
+//это public???? зачем???????????
 	void get_roots() {
 		if (!_a && !_b && !_c) {
 			flag = 3;
