@@ -51,6 +51,8 @@ int main() {
 	ggg.write((char *)&buf, 18);
 	fff.read((char *)&w, 4); cout << "w=" << w;
 	fff.read((char *)&h, 4); cout << ", h=" << h;
+	w = 600;
+	h = 230;
 	ggg.write((char *)&w, 4);//не понял???? //- ширина файла rez.bmp изменяется на ширину файла 1.bmp//СПАСИБО КЭП. я не понял ЗАЧЕМ это делать????? Как мне по твоему поментять размер того, что я хочу????
 	ggg.write((char *)&h, 4);//не понял???? //- высота файла rez.bmp изменяется на высоту файла 1.bmp
 	fff.read((char *)&buf, 28);
@@ -70,9 +72,9 @@ int main() {
 				b1 += step_b;
 				++cnt;
 			}
-			c.r = (unsigned char) r1;
-			c.g = (unsigned char) g1;
-			c.b = (unsigned char) b1;
+			c.r = (unsigned char)r1;
+			c.g = (unsigned char)g1;
+			c.b = (unsigned char)b1;
 			ggg.write((char *)&c, 3);
 		}
 		r1 = tmp_r;
