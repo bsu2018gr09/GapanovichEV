@@ -15,26 +15,26 @@ private:
 	double _x2; // корень квадратного уравнения ах^2+bx+c=0
 
 public:
-	QuadraticEquation() : _a{ 1 }, _b{ 1 }, _c{ 1 } {if (!_a) { _a = 1; } cout << "Constructor works\n"; };// прикольно. Я про такое КВАДРАТНОЕ ур.е и не слыхал!!!!
-	QuadraticEquation(double a, double b, double c) : _a{ a }, _b{ b }, _c{ c } {if (!_a) { _a = 1; } cout << "Constructor with coefficients a,b,c works\n"; };
-	QuadraticEquation(const QuadraticEquation &t) : _a{ t._a }, _b{ t._b }, _c{ t._c }{ cout << "Copy constructor\n"; };// и что он делает????
+	QuadraticEquation() : _a{ 1 }, _b{ 1 }, _c{ 1 } {if (!_a) { _a = 1; } cout << "Constructor works\n"; };// почему не все поля проинициализированны????
+	QuadraticEquation(double a, double b, double c) : _a{ a }, _b{ b }, _c{ c } {if (!_a) { _a = 1; } cout << "Constructor with coefficients a,b,c works\n"; };// не всё, что надо он делает????
+	QuadraticEquation(const QuadraticEquation &t) : _a{ t._a }, _b{ t._b }, _c{ t._c }{ cout << "Copy constructor\n"; };// не всё, что надо он делает????
 	~QuadraticEquation() { cout << "Destructor works\n"; };
 
-	void set_a(double a) { if (!a) { _a = 1; } else { _a = a; } };// да??? Вот так просто????? А подумать!!!!!
-	void set_b(double b) { _b = b; };
-	void set_c(double c) { _c = c; };
+	void set_a(double a) { if (!a) { _a = 1; } else { _a = a; } };// не всё, что надо он делает????
+	void set_b(double b) { _b = b; };// не всё, что надо он делает????
+	void set_c(double c) { _c = c; };// не всё, что надо он делает????
 
 	double get_a() { return _a; };
 	double get_b() { return _b; };
 	double get_c() { return _c; };
 
-	QuadraticEquation& operator = (const QuadraticEquation& p) {
+	QuadraticEquation& operator = (const QuadraticEquation& p) {// не всё, что надо он делает????
 		_a = p._a;
 		_b = p._b;
 		_c = p._c;
 		return *this;
 	}
-	QuadraticEquation operator + (const QuadraticEquation& q) {
+	QuadraticEquation operator + (const QuadraticEquation& q) {// не всё, что надо он делает????
 		if (!(_a + q._a))
 		{
 			cout<<"It is impossible to add, because the coefficient at 'a' is zero\n";
@@ -42,7 +42,7 @@ public:
 		}
 		return QuadraticEquation(_a + q._a, _b + q._b, _c + q._c);
 	}
-	QuadraticEquation operator - (const QuadraticEquation& q) {
+	QuadraticEquation operator - (const QuadraticEquation& q) {// не всё, что надо он делает????
 		if (!(_a - q._a))
 		{
 			cout << "Impossible to subtract, because the coefficient at 'a' is zero\n";
@@ -58,7 +58,7 @@ public:
 		}
 		return QuadraticEquation(_a * q, _b * q, _c * q);
 	}
-	QuadraticEquation operator / (double q) {//а зачем тут &
+	QuadraticEquation operator / (double q) {
 		if (!q) {
 			cout << "Impossible to divide\n";
 			return QuadraticEquation(*this);
@@ -66,7 +66,7 @@ public:
 		return QuadraticEquation(_a / q, _b / q, _c / q);
 	}
 	
-	void get_roots(int* array_roots) {
+	void get_roots(int* array_roots) {//зачем ЭТО всё тут???????????????? Подумай
 		if (!_b && !_c) {
 			_x1 = 0;
 			array_roots[0] = _x1;
