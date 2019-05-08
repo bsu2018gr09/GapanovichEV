@@ -81,7 +81,7 @@ int main() {
 		exit(0);
 	}
 	int*Arr = createMemory(n);
-	initArrRandom(Arr, n);
+	initArrRandom(Arr, n); 
 	cout << "Исходный массив: " << "\n";
 	printArr(Arr, n);
 	sort(Arr, n);
