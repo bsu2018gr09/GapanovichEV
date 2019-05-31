@@ -121,7 +121,7 @@ void sort(char**& arr, int k, int* arrdel) { // функция, которая �
 		flag = 0;
 		for (int j = 0; j < k - i - 1; ++j) {
 			if (arrdel[j] > arrdel[j + 1]) {
-				swap(arr[j], arr[j + 1]);
+				swap(arr[j], arr[j + 1]);//очень странно сортирует пустые строки
 				swap(arrdel[j],arrdel[j + 1]);
 				flag = 1;
 			}
